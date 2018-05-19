@@ -1,0 +1,58 @@
+[
+    {
+        "id" : "2",
+        "name" : "Iron Man"
+    },
+    {
+        "id" : "3",
+        "name" : "Thor"
+    },
+    {
+        "id" : "4",
+        "name" : "Black Panther"
+    },
+    {
+        "id" : "5",
+        "name" : "Spiderman: Homecoming"
+    },
+    {
+        "id" : "6",
+        "name" : "Hulk"
+    },
+    {
+        "id" : "7",
+        "name" : "Ant-man"
+    },
+    {
+        "id" : "8",
+        "name" : "Iron Man 2"
+    },
+    {
+        "id" : "9",
+        "name" : "Venom"
+    },
+    {
+        "id" : "10",
+        "name" : "Guardians of the Galaxy"
+    },
+    {
+        "id" : "11",
+        "name" : "Avangers: Infinity War"
+    },
+    {
+        "id" : "12",
+        "name" : "Doctor Strange"
+    },
+    {
+        "id" : "13",
+        "name" : "Deadpool"
+    },
+    {
+        "id" : "14",
+        "name" : "Captain Marvel"
+    },
+    {
+        "id" : "15",
+        "name" : "X-Men"
+    }
+]
