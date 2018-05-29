@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"os"
 	"strconv"
@@ -39,8 +38,6 @@ func findAll(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 			Body:       "Error while scanning DynamoDB",
 		}, nil
 	}
-
-	log.Println(request.Headers)
 
 	size, err := strconv.Atoi(request.Headers["Count"])
 	if err != nil {
