@@ -47,8 +47,8 @@ func findAll(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		}, nil
 	}
 
-	movies := make([]Movie, size)
-	for _, item := range res.Items[:size-1] {
+	movies := make([]Movie, 0)
+	for _, item := range res.Items[:size] {
 		movies = append(movies, Movie{
 			ID:   *item["ID"].S,
 			Name: *item["Name"].S,
