@@ -19,6 +19,14 @@ type Movie struct {
 }
 
 func findAll(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	size, err := strconv.Atoi(request.Headers["Count"])
+	if err != nil {
+		return events.APIGatewayProxyResponse{
+			StatusCode: http.StatusBadRequest,
+			Body:       "Count Header should be a number",
+		}, nil
+	}
+
 	cfg, err := external.LoadDefaultAWSConfig()
 	if err != nil {
 		return events.APIGatewayProxyResponse{
@@ -30,7 +38,9 @@ func findAll(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	svc := dynamodb.New(cfg)
 	req := svc.ScanRequest(&dynamodb.ScanInput{
 		TableName: aws.String(os.Getenv("TABLE_NAME")),
+		Limit:     aws.Int64(int64(size)),
 	})
+
 	res, err := req.Send()
 	if err != nil {
 		return events.APIGatewayProxyResponse{
@@ -39,16 +49,8 @@ func findAll(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		}, nil
 	}
 
-	size, err := strconv.Atoi(request.Headers["Count"])
-	if err != nil {
-		return events.APIGatewayProxyResponse{
-			StatusCode: http.StatusBadRequest,
-			Body:       "Count Header should be a number",
-		}, nil
-	}
-
 	movies := make([]Movie, 0)
-	for _, item := range res.Items[:size] {
+	for _, item := range res.Items {
 		movies = append(movies, Movie{
 			ID:   *item["ID"].S,
 			Name: *item["Name"].S,
