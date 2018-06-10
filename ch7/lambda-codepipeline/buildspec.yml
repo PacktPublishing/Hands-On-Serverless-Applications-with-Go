@@ -1,0 +1,30 @@
+version: 0.2
+env:
+  variables:
+    S3_BUCKET: "movies-api-deployment-packages"
+    PACKAGE: "github.com/mlabouardy/lambda-codepipeline"
+
+phases:
+  install:
+    commands:
+      - mkdir -p "/go/src/$(dirname ${PACKAGE})"
+      - ln -s "${CODEBUILD_SRC_DIR}" "/go/src/${PACKAGE}"
+      - go get -u github.com/golang/lint/golint
+
+  pre_build:
+    commands:
+      - cd "/go/src/${PACKAGE}"
+      - go get -t ./...
+      - golint -set_exit_status
+      - go vet .
+      - go test .
+
+  build:
+    commands:
+      - GOOS=linux go build -o main
+      - zip $CODEBUILD_RESOLVED_SOURCE_VERSION.zip main
+      - aws s3 cp $CODEBUILD_RESOLVED_SOURCE_VERSION.zip s3://$S3_BUCKET/
+
+  post_build:
+    commands:
+      - aws lambda update-function-code --function-name FindAllMovies --s3-bucket $S3_BUCKET --s3-key $CODEBUILD_RESOLVED_SOURCE_VERSION.zip
