@@ -9,4 +9,4 @@ Hands-On Serverless Applications with Go, published by Packt.
 * [Managing data persistence with DynamoDB](ch5)
 * [Deploying your Serverless Application](ch6)
 * [Implementing a CI/CD Pipeline](ch7)
-* [Implementing a CI/CD Pipeline](ch8)
+* [Scaling up your Application](ch8)
