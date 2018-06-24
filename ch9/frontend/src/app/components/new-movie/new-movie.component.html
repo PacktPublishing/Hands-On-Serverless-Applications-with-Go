@@ -1,0 +1,26 @@
+<div class="modal-header">
+    <h4 class="modal-title">New Movie</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <div *ngIf="showMsg" class="alert alert-success" role="alert">
+          <b>Well done !</b> You successfully added a new movie.
+       </div>
+       <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" class="form-control" #title>
+       </div>
+       <div class="form-group">
+          <label for="description">Description</label>
+          <textarea class="form-control" #description></textarea>
+       </div>
+       <div class="form-group">
+          <label for="cover">Cover</label>
+          <input type="text" class="form-control" #cover>
+       </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="save(title.value, description.value, cover.value)">Save</button>
+  </div>

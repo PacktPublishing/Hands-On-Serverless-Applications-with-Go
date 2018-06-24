@@ -7,7 +7,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">New <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="#" (click)="newMovie(content)">New <span class="badge badge-danger">+</span></a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
@@ -16,3 +16,7 @@
     </form>
   </div>
 </nav>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <new-movie></new-movie>
+</ng-template>
