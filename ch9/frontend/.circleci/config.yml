@@ -1,0 +1,28 @@
+version: 2
+jobs:
+  build_frontend:
+    docker:
+      - image: node:10.5.0
+    working_directory: ~/serverless-movies
+    steps:
+      - checkout
+      - restore_cache:
+        key: node-modules-{{checksum "package.json"}}
+      - run:
+        name: Install dependencies
+        command: npm install
+      - save_cache:
+        key: node-modules-{{checksum "package.json"}}
+        paths:
+          - node_modules
+      - run:
+        name: Build artifact
+        command: npm install -g @aws/cli && ng build --prod --aot
+      - run:
+        name: Install AWS CLI
+        command: |
+          apt-get update
+          apt-get install -y awscli
+      - run:
+        name: Push static files
+        command: aws s3 cp --recursive dist/ s3://serverless-movies.com/
