@@ -11,3 +11,4 @@ Hands-On Serverless Applications with Go, published by Packt.
 * [Implementing a CI/CD Pipeline](ch7)
 * [Scaling up your Application](ch8)
 * [Building the Frontend with S3](ch9)
+* [Testing your Serverless Application](ch10)
