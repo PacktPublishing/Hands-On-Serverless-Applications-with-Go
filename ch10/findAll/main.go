@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"net/http"
+	"os"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -30,7 +31,7 @@ func findAll() (events.APIGatewayProxyResponse, error) {
 
 	svc := dynamodb.New(cfg)
 	req := svc.ScanRequest(&dynamodb.ScanInput{
-		TableName: aws.String("movies"),
+		TableName: aws.String(os.Getenv("TABLE_NAME")),
 	})
 	res, err := req.Send()
 	if err != nil {
