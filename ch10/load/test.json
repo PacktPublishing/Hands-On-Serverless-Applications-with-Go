@@ -1,0 +1,18 @@
+{
+    "operation": "load",
+    "iterations": 100,
+    "function": "HarnessTestFindAllMovies",
+    "event": {
+      "operation": "unit",
+      "function": "FindAllMovies",
+      "resultsTable": "load-test-results",
+      "testId": "id",
+      "event": {
+        "options": {
+          "host": "https://51cxzthvma.execute-api.us-east-1.amazonaws.com",
+          "path": "/production/movies",
+          "method": "GET"
+        }
+      }
+    }
+  }
