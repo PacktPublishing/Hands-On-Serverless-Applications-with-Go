@@ -38,7 +38,7 @@ func findAll() (events.APIGatewayProxyResponse, error) {
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusInternalServerError,
 			Body:       "Error while scanning DynamoDB",
-		}, err
+		}, nil
 	}
 
 	movies := make([]Movie, 0)
