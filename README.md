@@ -12,3 +12,4 @@ Hands-On Serverless Applications with Go, published by Packt.
 * [Scaling up your Application](ch8)
 * [Building the Frontend with S3](ch9)
 * [Testing your Serverless Application](ch10)
+* [Monitoring and Troubleshooting](ch11)
