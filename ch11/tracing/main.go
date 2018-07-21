@@ -1,15 +1,17 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"os"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
-	"github.com/aws/aws-sdk-go-v2/aws"
-	"github.com/aws/aws-sdk-go-v2/aws/external"
-	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/dynamodb"
+	"github.com/aws/aws-xray-sdk-go/xray"
 )
 
 // Movie entity
@@ -20,20 +22,19 @@ type Movie struct {
 	Description string `json:"description"`
 }
 
-func findAll() (events.APIGatewayProxyResponse, error) {
-	cfg, err := external.LoadDefaultAWSConfig()
-	if err != nil {
-		return events.APIGatewayProxyResponse{
-			StatusCode: http.StatusInternalServerError,
-			Body:       "Error while retrieving AWS credentials",
-		}, nil
-	}
+func findAll(ctx context.Context) (events.APIGatewayProxyResponse, error) {
+	xray.Configure(xray.Config{
+		LogLevel:       "info",
+		ServiceVersion: "1.2.3",
+	})
 
-	svc := dynamodb.New(cfg)
-	req := svc.ScanRequest(&dynamodb.ScanInput{
+	sess := session.Must(session.NewSession())
+	dynamo := dynamodb.New(sess)
+	xray.AWS(dynamo.Client)
+
+	res, err := dynamo.ScanWithContext(ctx, &dynamodb.ScanInput{
 		TableName: aws.String(os.Getenv("TABLE_NAME")),
 	})
-	res, err := req.Send()
 	if err != nil {
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusInternalServerError,
