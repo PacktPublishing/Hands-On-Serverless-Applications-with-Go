@@ -9,7 +9,9 @@ import { ListMoviesComponent } from './components/list-movies/list-movies.compon
 import { MovieItemComponent } from './components/movie-item/movie-item.component';
 import { MoviesApiService } from './services/movies-api.service';
 import { NewMovieComponent } from './components/new-movie/new-movie.component';
+import { CognitoService } from './services/cognito.service';
 
+import { StorageServiceModule} from 'angular-webstorage-service';
 
 @NgModule({
   declarations: [
@@ -22,10 +24,12 @@ import { NewMovieComponent } from './components/new-movie/new-movie.component';
   imports: [
     NgbModule.forRoot(),
     BrowserModule,
-    HttpModule
+    HttpModule,
+    StorageServiceModule
   ],
   providers: [
-    MoviesApiService
+    MoviesApiService,
+    CognitoService
   ],
   bootstrap: [AppComponent]
 })

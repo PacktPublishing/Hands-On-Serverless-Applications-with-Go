@@ -7,16 +7,17 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#" (click)="newMovie(content)">New <span class="badge badge-danger">+</span></a>
+        <a class="nav-link" href="#" (click)="openNewMovieModal(contentnew)">New <span class="badge badge-danger">+</span></a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search ...">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">GO !</button>
-    </form>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item" *ngIf="isLogged()">
+        <a class="nav-link" href="#" (click)="signout()">Sign out</a>
+      </li>
+    </ul>
   </div>
 </nav>
 
-<ng-template #content let-c="close" let-d="dismiss">
+<ng-template #contentnew let-c="close" let-d="dismiss">
   <new-movie></new-movie>
 </ng-template>

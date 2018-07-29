@@ -1,27 +1,40 @@
-import { Component } from '@angular/core';
-import { CognitoUserPool, CognitoUser} from 'amazon-cognito-identity-js';
+import { Component, Inject, ViewChild, OnInit } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { CognitoService } from './services/cognito.service';
+import {LOCAL_STORAGE, WebStorageService} from 'angular-webstorage-service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  public _POOL_DATA: any = {
-    UserPoolId: "us-east-1_qTCypPvBf",
-    ClientId: "6ndbtp2jso02odhjo2i1i103n0"
-};
+export class AppComponent implements OnInit{
+  private loginModal: NgbModalRef;
+  public loginError : boolean;
 
-  constructor(){
+  @ViewChild('contentlogin') 
+  private content;
+
+  constructor(private modalService: NgbModal,
+              private cognitoService: CognitoService,
+              @Inject(LOCAL_STORAGE) private storage: WebStorageService){}
+
+  ngOnInit(){
+    if(!this.storage.get("COGNITO_TOKEN")){
+      this.loginModal = this.modalService.open(this.content)
+    }
   }
 
-  
-
-  getUserPool() {
-    return new CognitoUserPool(this._POOL_DATA);
-  }
-
-  getCurrentUser() {
-    return this.getUserPool().getCurrentUser();
+  signin(username, password){
+    this.cognitoService.auth(username, password, (err, token) => {
+      if(err){
+        this.loginError = true
+      }else{
+        this.loginError = false
+        this.storage.set("COGNITO_TOKEN", token)
+        this.loginModal.close()
+        window.location.reload()
+      }
+    })
   }
 }
