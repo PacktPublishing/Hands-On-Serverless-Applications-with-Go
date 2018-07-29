@@ -1,0 +1,18 @@
+.card{
+    margin-bottom: 25px;
+}
+
+.card-img-top{
+    height: 287px;
+}
+
+.card-title{
+    font-size: 0.9em;
+}
+
+.card-text{
+    height: 100px;
+    overflow: hidden;
+    font-size: 0.7em;
+    font-style: italic;
+}
