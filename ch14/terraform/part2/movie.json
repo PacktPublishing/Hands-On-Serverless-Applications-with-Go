@@ -1,0 +1,6 @@
+{
+    "ID": {"S": "1"},
+    "Name": {"S": "Ant-Man and the Wasp"},
+    "Description": {"S": "A Marvel's movie"},
+    "Cover": {"S": "https://image.tmdb.org/t/p/w300_and_h450_bestv2/rv1AWImgx386ULjcf62VYaW8zSt.jpg"}
+}
