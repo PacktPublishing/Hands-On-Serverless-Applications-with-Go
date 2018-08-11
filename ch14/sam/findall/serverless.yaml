@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  FindAllFunction:
+    Properties:
+      CodeUri: s3://hands-on-serverless-go-packt/764cf76832f79ca7f29c6397fe7ccd91
+      Environment:
+        Variables:
+          TABLE_NAME:
+            Ref: MoviesTable
+      Handler: main
+      Policies: AmazonDynamoDBFullAccess
+      Runtime: go1.x
+    Type: AWS::Serverless::Function
+  MoviesTable:
+    Properties:
+      PrimaryKey:
+        Name: ID
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+    Type: AWS::Serverless::SimpleTable
+Transform: AWS::Serverless-2016-10-31

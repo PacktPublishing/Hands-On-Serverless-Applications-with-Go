@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  FindAllFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: main
+      Runtime: go1.x
+      Policies: AmazonDynamoDBFullAccess 
+      Environment:
+        Variables: 
+          TABLE_NAME: !Ref MoviesTable
+  MoviesTable:                   
+     Type: AWS::Serverless::SimpleTable
+     Properties:
+       PrimaryKey:
+         Name: ID
+         Type: String
+       ProvisionedThroughput:
+         ReadCapacityUnits: 5
+         WriteCapacityUnits: 5
