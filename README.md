@@ -15,3 +15,4 @@ Hands-On Serverless Applications with Go, published by Packt.
 * [Monitoring and Troubleshooting](ch11)
 * [Securing your Serverless Application](ch12)
 * [Infrastructure as Code](ch14)
+* [Assessments](assessments)
