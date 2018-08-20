@@ -1,0 +1,124 @@
+def bucket = 'movies-api-deployment-packages'
+
+node('slave-golang'){
+    stage('Checkout'){
+        checkout scm
+        sh 'go get -u github.com/golang/lint/golint'
+        sh 'go get -t ./...'
+    }
+
+    stage('Test'){
+        parallel {
+            stage('FindAllMovies') {
+                sh 'cd findAll'
+                sh 'golint -set_exit_status'
+                sh 'go vet .'
+                sh 'go test .'
+            }
+            stage('DeleteMovie') {
+                sh 'cd delete'
+                sh 'golint -set_exit_status'
+                sh 'go vet .'
+                sh 'go test .'
+            }
+            stage('UpdateMovie') {
+                sh 'cd update'
+                sh 'golint -set_exit_status'
+                sh 'go vet .'
+                sh 'go test .'
+            }
+            stage('InsertMovie') {
+                sh 'cd insert'
+                sh 'golint -set_exit_status'
+                sh 'go vet .'
+                sh 'go test .'
+            }
+        }
+    }
+
+    stage('Build'){
+        parallel {
+            stage('FindAllMovies') {
+                sh 'cd findAll'
+                sh 'GOOS=linux go build -o main main.go'
+                sh "zip findAll-${commitID()}.zip main"
+            }
+            stage('DeleteMovie') {
+                sh 'cd delete'
+                sh 'GOOS=linux go build -o main main.go'
+                sh "zip delete-${commitID()}.zip main"
+            }
+            stage('UpdateMovie') {
+                sh 'cd update'
+                sh 'GOOS=linux go build -o main main.go'
+                sh "zip update-${commitID()}.zip main"
+            }
+            stage('InsertMovie') {
+                sh 'cd insert'
+                sh 'GOOS=linux go build -o main main.go'
+                sh "zip insert-${commitID()}.zip main"
+            }
+        }
+    }
+
+    stage('Push'){
+        parallel {
+            stage('FindAllMovies') {
+                sh 'cd findAll'
+                sh "aws s3 cp findAll-${commitID()}.zip s3://${bucket}"
+            }
+            stage('DeleteMovie') {
+                sh 'cd delete'
+                sh "aws s3 cp delete-${commitID()}.zip s3://${bucket}"
+            }
+            stage('UpdateMovie') {
+                sh 'cd update'
+                sh "aws s3 cp update-${commitID()}.zip s3://${bucket}"
+            }
+            stage('InsertMovie') {
+                sh 'cd insert'
+                sh "aws s3 cp insert-${commitID()}.zip s3://${bucket}"
+            }
+        }
+    }
+
+    stage('Deploy'){
+        parallel {
+            stage('FindAllMovies') {
+                sh 'cd findAll'
+                sh "aws lambda update-function-code --function-name FindAllMovies \
+                --s3-bucket ${bucket} \
+                --s3-key findAll-${commitID()}.zip \
+                --region us-east-1"
+            }
+            stage('DeleteMovie') {
+                sh 'cd delete'
+                sh "aws lambda update-function-code --function-name DeleteMovie \
+                --s3-bucket ${bucket} \
+                --s3-key delete-${commitID()}.zip \
+                --region us-east-1"
+            }
+            stage('UpdateMovie') {
+                sh 'cd update'
+                sh "aws lambda update-function-code --function-name UpdateMovie \
+                --s3-bucket ${bucket} \
+                --s3-key update-${commitID()}.zip \
+                --region us-east-1"
+            }
+            stage('InsertMovie') {
+                sh 'cd insert'
+                sh "aws lambda update-function-code --function-name InsertMovie \
+                --s3-bucket ${bucket} \
+                --s3-key insert-${commitID()}.zip \
+                --region us-east-1"
+            }
+        }
+    }
+}
+
+def commitID() {
+    sh 'git rev-parse HEAD > .git/commitID'
+    def commitID = readFile('.git/commitID').trim()
+    sh 'rm .git/commitID'
+    commitID
+}
