@@ -1,0 +1,25 @@
+def bucket = 'movies-api-documentation'
+def api_id = ''
+
+node('slaves'){
+    stage('Generate'){
+        if (env.BRANCH_NAME == 'master') {
+            sh "aws apigateway get-export --rest-api-id ${api_id} \
+                --stage-name production \
+                --export-type swagger swagger.json"
+        }
+        else if (env.BRANCH_NAME == 'preprod') {
+            sh "aws apigateway get-export --rest-api-id ${api_id} \
+                --stage-name staging \
+                --export-type swagger swagger.json"
+        } else {
+            sh "aws apigateway get-export --rest-api-id ${api_id} \
+                --stage-name sandbox \
+                --export-type swagger swagger.json"
+        }
+    }
+
+    stage('Publish'){
+        sh "aws s3 cp swagger.json s3://${bucket}"
+    }
+}
