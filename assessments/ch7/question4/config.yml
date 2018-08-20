@@ -1,0 +1,56 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: golang:1.8
+
+    working_directory: /go/src/github.com/mlabouardy/lambda-circleci
+
+    environment:
+        S3_BUCKET: movies-api-deployment-packages
+
+    steps:
+      - checkout
+
+      - run:
+         name: Install AWS CLI & Zip
+         command: |
+          apt-get update
+          apt-get install -y zip python-pip python-dev
+          pip install awscli
+
+      - run:
+          name: Test
+          command: |
+           go get -u github.com/golang/lint/golint
+           go get -t ./...
+           golint -set_exit_status
+           go vet .
+           go test .
+
+      - run:
+         name: Build
+         command: |
+          GOOS=linux go build -o main main.go
+          zip $CIRCLE_SHA1.zip main
+      
+      - run:
+          name: Push
+          command: aws s3 cp $CIRCLE_SHA1.zip s3://$S3_BUCKET
+
+      - run:
+          name: Deploy
+          command: |
+            aws lambda update-function-code --function-name FindAllMovies \
+                --s3-bucket $S3_BUCKET \
+                --s3-key $CIRCLE_SHA1.zip --region us-east-1
+      
+      - run:
+          name: Publish
+          command: |
+            if [ $CIRCLE_BRANCH = 'master' ]; then 
+              aws lambda publish-version --function-name FindAllMovies \
+                --description $GIT_COMMIT_DESC --region us-east-1
+            fi
+          environment:
+            GIT_COMMIT_DESC: git log --format=%B -n 1 $CIRCLE_SHA1
