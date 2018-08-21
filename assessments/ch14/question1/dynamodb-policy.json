@@ -1,0 +1,11 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "1",
+            "Effect": "Allow",
+            "Action": "dynamodb:PutItem",
+            "Resource": "*"
+        }
+    ]
+}
