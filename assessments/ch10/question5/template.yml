@@ -22,7 +22,7 @@ Resources:
         AnyRequest:
           Type: Api
           Properties:
-            Path: /
+            Path: /movies
             Method: GET
             RestApiId:
               Ref: MoviesAPI
@@ -84,7 +84,7 @@ Resources:
         info:
           title: !Sub API-${StageName}
         paths:
-          /:
+          /movies:
             x-amazon-apigateway-any-method:
               produces:
                 - application/json
