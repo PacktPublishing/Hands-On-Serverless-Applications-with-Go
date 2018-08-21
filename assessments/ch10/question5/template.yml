@@ -1,0 +1,96 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Parameters:
+  StageName:
+    Type: String
+    Default: staging
+    Description: The API Gateway deployment stage
+
+Resources:
+  FindAllMovies:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: main
+      Runtime: go1.x
+      Role: !GetAtt FindAllMoviesRole.Arn 
+      CodeUri: ./findall/deployment.zip
+      Environment:
+        Variables: 
+          TABLE_NAME: !Ref MoviesTable
+      Events:
+        AnyRequest:
+          Type: Api
+          Properties:
+            Path: /
+            Method: GET
+            RestApiId:
+              Ref: MoviesAPI
+  
+  FindAllMoviesRole:
+   Type: "AWS::IAM::Role"
+   Properties:
+     Path: "/"
+     ManagedPolicyArns:
+         - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+     AssumeRolePolicyDocument:
+       Version: "2012-10-17"
+       Statement:
+         -
+           Effect: "Allow"
+           Action:
+             - "sts:AssumeRole"
+           Principal:
+             Service:
+               - "lambda.amazonaws.com"
+     Policies: 
+        - 
+          PolicyName: "PushCloudWatchLogsPolicy"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                - logs:CreateLogGroup
+                - logs:CreateLogStream
+                - logs:PutLogEvents
+                Resource: "*"
+        - 
+          PolicyName: "ScanDynamoDBTablePolicy"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                - dynamodb:Scan
+                Resource: "*"
+
+  MoviesTable:                   
+     Type: AWS::Serverless::SimpleTable
+     Properties:
+       PrimaryKey:
+         Name: ID
+         Type: String
+       ProvisionedThroughput:
+         ReadCapacityUnits: 5
+         WriteCapacityUnits: 5
+
+  MoviesAPI:
+    Type: 'AWS::Serverless::Api'
+    Properties:
+      StageName: !Ref StageName
+      DefinitionBody:
+        swagger: 2.0
+        info:
+          title: !Sub API-${StageName}
+        paths:
+          /:
+            x-amazon-apigateway-any-method:
+              produces:
+                - application/json
+              x-amazon-apigateway-integration:
+                uri:
+                  !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${FindAllMovies.Arn}:current/invocations"
+                passthroughBehavior: when_no_match
+                httpMethod: POST
+                type: aws_proxy
