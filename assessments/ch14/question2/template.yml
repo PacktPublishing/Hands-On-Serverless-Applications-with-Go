@@ -1,0 +1,116 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Simple Lambda Function"
+Parameters:
+  FunctionName:
+    Description: "Function name"
+    Type: "String"
+    Default: "HelloWorld"
+  BucketName:
+    Description: "S3 Bucket name"
+    Type: "String"
+  TableName:
+    Description: "DynamoDB Table Name"
+    Type: "String"
+    Default: "movies"
+Resources:
+  ExecutionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - 
+            Effect: "Allow"
+            Principal:
+              Service:
+                - "lambda.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Policies:
+        - 
+          PolicyName: "PushCloudWatchLogsPolicy"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                - logs:CreateLogGroup
+                - logs:CreateLogStream
+                - logs:PutLogEvents
+                Resource: "*"
+        - 
+          PolicyName: "ScanDynamoDBTablePolicy"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                - dynamodb:Scan
+                Resource: "*"
+  HelloWorldFunction:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      Code:
+        S3Bucket: !Ref BucketName
+        S3Key: deployment.zip
+      FunctionName: !Ref FunctionName
+      Handler: "main"
+      Runtime: "go1.x"
+      Role: !GetAtt ExecutionRole.Arn
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref TableName
+  DynamoDBTable:
+    Type: "AWS::DynamoDB::Table"
+    Properties:
+      TableName: !Ref TableName
+      AttributeDefinitions:
+        -
+          AttributeName: "ID"
+          AttributeType: "S"
+      KeySchema:
+        -
+          AttributeName: "ID"
+          KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+  API:
+    Type: "AWS::ApiGateway::RestApi"
+    Properties:
+      Name: "API"
+      FailOnWarnings: "true"
+  DemoResource:
+    Type: "AWS::ApiGateway::Resource"
+    Properties:
+      ParentId:
+        Fn::GetAtt:
+          - "API"
+          - "RootResourceId"
+      PathPart: "demo"
+      RestApiId:
+        Ref: API
+  DisplayMessageMethod:
+    Type: "AWS::ApiGateway::Method"
+    Properties:
+      HttpMethod: "GET"
+      AuthorizationType: "NONE"
+      ResourceId:
+        Ref: DemoResource
+      RestApiId:
+        Ref: API
+      Integration:
+        Type: "AWS"
+        Uri:
+          Fn::Join:
+            - ""
+            - - "arn:aws:apigateway:"
+              - !Ref "AWS::Region"
+              - ":lambda:path/"
+              - "/2015-03-31/functions/"
+              - Fn::GetAtt:
+                - HelloWorldFunction
+                - Arn
+              - "/invocations"
+        IntegrationHttpMethod: "GET"
+
