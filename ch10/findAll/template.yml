@@ -7,6 +7,9 @@ Resources:
     Properties:
       Handler: main
       Runtime: go1.x
+      Environment:
+        Variables:
+          TABLE_NAME: 
       Events:
         Vote:
           Type: Api
