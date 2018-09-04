@@ -1,6 +1,4 @@
-
-Hands-On Serverless Applications with Go, published by Packt.
-# Hands-On-Serverless-Applications-with-Go
+# Hands-On Serverless Applications with Go
 <a href="https://www.packtpub.com/application-development/hands-serverless-applications-go?utm_source=github&utm_medium=repository&utm_campaign=9781789134612"><img src="https://dz13w8afd47il.cloudfront.net/sites/default/files/imagecache/ppv4_main_book_cover/B11644_cover_0.png" alt="
 Hands-On Serverless Applications with Go" height="256px" align="right"></a>
 
@@ -70,7 +68,21 @@ He is interested in serverless architecture, containers, distributed systems, Go
 He currently works at Foxintelligence as a lead DevOps engineer. He is also a technical content writer at several platforms and is a regular speaker at multiple international events and conferences, such as Nexus User Conference and AllDayDevOps.
 You can find him on Twitter at @mlabouardy.
 
+## Table of contents
 
+* [Getting Started with AWS Lambda](ch2)
+* [Developing a Serverless Function with Lambda](ch3)
+* [Setting up API Endpoints with API Gateway](ch4)
+* [Managing data persistence with DynamoDB](ch5)
+* [Deploying your Serverless Application](ch6)
+* [Implementing a CI/CD Pipeline](ch7)
+* [Scaling up your Application](ch8)
+* [Building the Frontend with S3](ch9)
+* [Testing your Serverless Application](ch10)
+* [Monitoring and Troubleshooting](ch11)
+* [Securing your Serverless Application](ch12)
+* [Infrastructure as Code](ch14)
+* [Assessments](assessments)
 
 ### Suggestions and Feedback
 [Click here](https://docs.google.com/forms/d/e/1FAIpQLSdy7dATC6QmEL81FIUuymZ0Wy9vH1jHkvpY57OiMeKGqib_Ow/viewform) if you have any feedback or suggestions.
