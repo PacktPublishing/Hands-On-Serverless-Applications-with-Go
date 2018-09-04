@@ -61,7 +61,7 @@ We also provide a PDF file that has color images of the screenshots/diagrams use
 
 * Go Standard Library Cookbook [[Packt]](https://www.packtpub.com/application-development/go-standard-library-cookbook?utm_source=github&utm_medium=repository&utm_campaign=9781788475273) [[Amazon]](https://www.amazon.com/dp/178712598X)
 
-## Get to Know the Author(s)
+## Get to Know the Author
 **Mohamed Labouardy**
 is a software engineer/DevOps engineer and AWS Solution Architect. He is also a certified Scrum Master.
 He is interested in serverless architecture, containers, distributed systems, Go, chaos engineering, and machine learning. He is a contributor to numerous open source projects such as DialogFlow, Jenkins, Docker, Nexus, and Telegraf. He has authored some open source projects related to DevOps as well.
