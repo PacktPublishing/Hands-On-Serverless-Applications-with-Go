@@ -68,21 +68,19 @@ He is interested in serverless architecture, containers, distributed systems, Go
 He currently works at Foxintelligence as a lead DevOps engineer. He is also a technical content writer at several platforms and is a regular speaker at multiple international events and conferences, such as Nexus User Conference and AllDayDevOps.
 You can find him on Twitter at @mlabouardy.
 
-## Table of contents
+## Links for the Youtube video
 
-* [Getting Started with AWS Lambda](ch2)
-* [Developing a Serverless Function with Lambda](ch3)
-* [Setting up API Endpoints with API Gateway](ch4)
-* [Managing data persistence with DynamoDB](ch5)
-* [Deploying your Serverless Application](ch6)
-* [Implementing a CI/CD Pipeline](ch7)
-* [Scaling up your Application](ch8)
-* [Building the Frontend with S3](ch9)
-* [Testing your Serverless Application](ch10)
-* [Monitoring and Troubleshooting](ch11)
-* [Securing your Serverless Application](ch12)
-* [Infrastructure as Code](ch14)
-* [Assessments](assessments)
+* [Getting Started with AWS Lambda](https://www.youtube.com/watch?v=v9xo4zAzqvQ&feature=youtu.be)
+* [Developing a Serverless Function with Lambda](https://www.youtube.com/watch?v=ggV5g90GaAM&feature=youtu.be)
+* [Setting up Serverless API with API Gateway](https://www.youtube.com/watch?v=v9xo4zAzqvQ&feature=youtu.be)
+* [Managing Data Persistence with DynamoDB](https://www.youtube.com/watch?v=1Cb8Oxc1smg&feature=youtu.be)
+* [Managing Lambda Functions with AWS CLI](https://www.youtube.com/watch?v=ENckwkwxa08&feature=youtu.be)
+* [Managing Lambda Function Concurrency](https://www.youtube.com/watch?v=qVeTrR3L4T4&feature=youtu.be)
+* [Building a Web Application backed with Serverless Functions](https://www.youtube.com/watch?v=TCWPLS02VMA&feature=youtu.be)
+* [Testing Serverless Applications locally with AWS SAM](https://www.youtube.com/watch?v=rsGQNfKEL-8&feature=youtu.be)
+* [Instrumenting Lambda Functions with AWS X-Ray](https://www.youtube.com/watch?v=HtHS-9Cu66I&feature=youtu.be)
+* [Tracking Lambda Memory usage with AWS CloudWatch](https://www.youtube.com/watch?v=NKjRkFRlE-o&feature=youtu.be)
+* [Deploying Lambda Function with Terraform](https://www.youtube.com/watch?v=4ziExgwGsgQ&feature=youtu.be)
 
 ### Suggestions and Feedback
 [Click here](https://docs.google.com/forms/d/e/1FAIpQLSdy7dATC6QmEL81FIUuymZ0Wy9vH1jHkvpY57OiMeKGqib_Ow/viewform) if you have any feedback or suggestions.
