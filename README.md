@@ -48,9 +48,11 @@ With the following software and hardware list you can run all code files present
 | 8        | Apache Bench, Hey                   | Linux, macOS, Windows (Any)   |
 | 9        | Angular, Node.JS, NPM, Swagger UI   | Linux, macOS, Windows (Any)   |
 | 10       | SAM, Docker                         | Linux, macOS, Windows (Any)   |
-| 11       |None                                 |Linux, macOS, Windows (Any)    |
-| 12       |Cognito SDK, MySQL,Elasticsearch,    |Linux, macOS, Windows (Any)    |
+| 11       | None                                | Linux, macOS, Windows (Any)   |
+| 12       | Cognito SDK, MySQL,Elasticsearch,   | Linux, macOS, Windows (Any)   |
 |          | Logstash,Kibana, Snyk               |                               |
+| 13       | None                                | Linux, macOS, Windows (Any)   |
+| 14       | Terraform, SAM, Docker              | Linux, macOS, Windows (Any)   |
 
 
 We also provide a PDF file that has color images of the screenshots/diagrams used in this book. [Click here to download it](http://www.packtpub.com/sites/default/files/downloads/HandsOnServerlessApplicationswithGo_ColorImages.pdf).
