@@ -66,8 +66,11 @@ We also provide a PDF file that has color images of the screenshots/diagrams use
 ## Get to Know the Author
 **Mohamed Labouardy**
 is a software engineer/DevOps engineer and AWS Solution Architect. He is also a certified Scrum Master.
+
 He is interested in serverless architecture, containers, distributed systems, Go, chaos engineering, and machine learning. He is a contributor to numerous open source projects such as DialogFlow, Jenkins, Docker, Nexus, and Telegraf. He has authored some open source projects related to DevOps as well.
+
 He currently works at Foxintelligence as a lead DevOps engineer. He is also a technical content writer at several platforms and is a regular speaker at multiple international events and conferences, such as Nexus User Conference and AllDayDevOps.
+
 You can find him on Twitter at @mlabouardy.
 
 ## Links for the Youtube video
