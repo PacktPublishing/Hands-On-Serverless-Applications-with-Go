@@ -1,5 +1,5 @@
 # Hands-On Serverless Applications with Go
-<a href="https://www.packtpub.com/application-development/hands-serverless-applications-go?utm_source=github&utm_medium=repository&utm_campaign=9781789134612"><img src="https://dz13w8afd47il.cloudfront.net/sites/default/files/imagecache/ppv4_main_book_cover/B11644_cover_0.png" alt="
+<a href="https://www.packtpub.com/application-development/hands-serverless-applications-go?utm_source=github&utm_medium=repository&utm_campaign=9781789134612"><img src="https://static.packt-cdn.com/products/9781789134612/cover/smaller" alt="
 Hands-On Serverless Applications with Go" height="256px" align="right"></a>
 
 This is the code repository for [Hands-On Serverless Applications with Go](https://www.packtpub.com/application-development/hands-serverless-applications-go?utm_source=github&utm_medium=repository&utm_campaign=9781789134612), published by Packt.
